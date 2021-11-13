@@ -131,6 +131,8 @@ func main() {
 
 	}
 	CheckError(err)
+	fmt.Println("Clusters:", clusters)
+	fmt.Println("Databases:", databases)
 }
 
 func CheckError(err error) {
