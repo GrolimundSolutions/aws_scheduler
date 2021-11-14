@@ -43,6 +43,8 @@ type ClusterItem struct {
 }
 
 func main() {
+	utils.Test()
+	os.Exit(0)
 	log.SetFormatter(&log.TextFormatter{
 		DisableColors: true,
 		FullTimestamp: true,
