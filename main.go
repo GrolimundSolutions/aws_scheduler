@@ -43,8 +43,9 @@ type ClusterItem struct {
 }
 
 func main() {
-	utils.Test()
-	os.Exit(0)
+	// Delete me after testing
+	utils.Test("test-db")
+
 	log.SetFormatter(&log.TextFormatter{
 		DisableColors: true,
 		FullTimestamp: true,
