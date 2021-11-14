@@ -9,7 +9,7 @@ import (
 	"log"
 )
 
-func Test() {
+func Test(DbId string) {
 	// Load the Shared AWS Configuration (~/.aws/config)
 	// or load from the environment variables
 	cfg, err := config.LoadDefaultConfig(context.TODO())
@@ -30,7 +30,7 @@ func Test() {
 	}
 
 	rdsOutput, err := rdsClient.StopDBInstance(context.TODO(), &rds.StopDBInstanceInput{
-		DBInstanceIdentifier: aws.String("my-db-instance"),
+		DBInstanceIdentifier: &DbId,
 	})
 	if err != nil {
 		log.Fatal(err)
