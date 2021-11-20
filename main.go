@@ -76,6 +76,8 @@ func main() {
 	// Select all Items from the DB with the needed values (Day.now, Hour.now)
 	app.loadDatabaseInfos()
 
+	app.startScheduling()
+
 }
 
 func CheckError(err error) {
