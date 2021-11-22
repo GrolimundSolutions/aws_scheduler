@@ -83,15 +83,3 @@ func (app *application) startScheduling() {
 	fmt.Println("Main: Completed")
 
 }
-
-func db_runner(wg *sync.WaitGroup, dbid string, n int) {
-	defer wg.Done()
-	log.Debugf("DB_Worker: %d: Started, DB: %s", n, dbid)
-	// Do some Stuff
-}
-
-func cluster_runner(wg *sync.WaitGroup, dbid string, n int) {
-	defer wg.Done()
-	log.Debugf("Cluster_Worker: %d: Started, DB: %s", n, dbid)
-	// Do some Stuff
-}
