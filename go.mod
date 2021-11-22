@@ -1,4 +1,4 @@
-module github.com/GrolimundSolutions/psql_example
+module github.com/GrolimundSolutions/aws_scheduler
 
 go 1.17
 

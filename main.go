@@ -41,12 +41,12 @@ func main() {
 
 	psqlconn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
 		config.DBHost, config.DBPort, config.DBUser, config.DBPassword, config.DBName)
-	fmt.Println(psqlconn)
 	db, err := sql.Open("postgres", psqlconn)
 	defer db.Close()
 	CheckError(err)
 
 	log.WithFields(log.Fields{
+		"Environment":        config.Environment,
 		"day":                getDayOfWeek(),
 		"hour":               getActuallyHour(),
 		"DB_Host":            config.DBHost,
