@@ -66,7 +66,7 @@ func (app *application) startScheduling() {
 	for i, db := range app.databases {
 		log.Debugf("Starting DB_Worker: %d for dbid: %s", i, db.DbId)
 		go func(group *sync.WaitGroup, db string, number int) {
-			db_runner(&wg, db, i)
+			db_runner(group, db, number)
 		}(&wg, db.DbId, i)
 	}
 
@@ -74,7 +74,7 @@ func (app *application) startScheduling() {
 	for j, cluster := range app.clusters {
 		log.Debugf("Starting Cluster_Worker: %d for dbid: %s", j, cluster.DbId)
 		go func(group *sync.WaitGroup, cluster string, number int) {
-			cluster_runner(&wg, cluster, j)
+			cluster_runner(group, cluster, number)
 		}(&wg, cluster.DbId, j)
 	}
 

@@ -10,7 +10,7 @@ import (
 
 type application struct {
 	db        *sql.DB
-	ctx       Config
+	ctx       *Config
 	day       int
 	hour      int
 	databases []DatabaseItem
@@ -41,7 +41,7 @@ func main() {
 
 	psqlconn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
 		config.DBHost, config.DBPort, config.DBUser, config.DBPassword, config.DBName)
-
+	fmt.Println(psqlconn)
 	db, err := sql.Open("postgres", psqlconn)
 	defer db.Close()
 	CheckError(err)
@@ -63,7 +63,7 @@ func main() {
 
 	app := &application{
 		db:        db,
-		ctx:       config,
+		ctx:       &config,
 		day:       getDayOfWeek(),
 		hour:      getActuallyHour(),
 		databases: nil,
@@ -73,9 +73,12 @@ func main() {
 	// Check and retry the Connection to the Database
 	app.checkConnection()
 
+	app.initScheduler()
+
 	// Select all Items from the DB with the needed values (Day.now, Hour.now)
 	app.loadDatabaseInfos()
 
+	// Start the scheduler with the given values
 	app.startScheduling()
 
 }
