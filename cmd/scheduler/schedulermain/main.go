@@ -51,7 +51,6 @@ func Run() {
 		"hour":               getActuallyHour(),
 		"DB_Host":            config.DBHost,
 		"DB_Name":            config.DBName,
-		"DB_Table":           config.DBTable,
 		"DB_Port":            config.DBPort,
 		"DB_User":            config.DBUser,
 		"DB_Password":        "*****",
