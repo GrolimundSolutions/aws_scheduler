@@ -7,14 +7,30 @@ import (
 
 func db_runner(wg *sync.WaitGroup, dbid string, n int) {
 	defer wg.Done()
-	log.Debugf("DB_Worker: %d: Started, DB: %s", n, dbid)
+	log.WithFields(log.Fields{
+		"Worker": n,
+		"DB":     dbid,
+	}).Debug("Worker Started")
+
 	// Do some Stuff
-	log.Debugf("DB_Worker: %d: Done, DB: %s", n, dbid)
+
+	log.WithFields(log.Fields{
+		"Worker": n,
+		"DB":     dbid,
+	}).Debug("Worker Done")
 }
 
 func cluster_runner(wg *sync.WaitGroup, dbid string, n int) {
 	defer wg.Done()
-	log.Debugf("Cluster_Worker: %d: Started, DB: %s", n, dbid)
+	log.WithFields(log.Fields{
+		"Worker":  n,
+		"Cluster": dbid,
+	}).Debug("Worker Started")
+
 	// Do some Stuff
-	log.Debugf("Cluster_Worker: %d: Done, DB: %s", n, dbid)
+
+	log.WithFields(log.Fields{
+		"Worker":  n,
+		"Cluster": dbid,
+	}).Debug("Worker Done")
 }
