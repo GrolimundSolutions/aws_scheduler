@@ -11,13 +11,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: Install dependencies
+        run: go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.43.0
       - name: Run linter
         run: make lint
-      - name: Run unit tests
-        run: make unit-test
-      - name: Get unit test coverage
-        run: make unit-test-coverage
-      - name: Build Linux binary
-        run: make PLATFORM=linux/amd64
-      - name: Build Windows binary
-        run: make PLATFORM=windows/amd64
+      - name: Build Linux binary amd64
+        run: make build
