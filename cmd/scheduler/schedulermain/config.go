@@ -1,4 +1,4 @@
-package main
+package schedulermain
 
 import (
 	"github.com/spf13/viper"
@@ -17,6 +17,7 @@ type Config struct {
 	AwsAccessKeyId string `mapstructure:"AWS_ACCESS_KEY_ID"`
 	AwsAccessKey   string `mapstructure:"AWS_ACCESS_KEY"`
 	AwsRegion      string `mapstructure:"AWS_REGION"`
+	Environment    string `mapstructure:"ENVIRONMENT"`
 }
 
 // LoadConfig reads configuration from file or environment variables.

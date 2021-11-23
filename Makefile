@@ -1,24 +1,16 @@
-all: bin/example
-test: lint unit-test unit-test-coverage
+BINARY=aws_scheduler
 
-PLATFORM=local
 
-.PHONY: bin/example
-bin/example:
-	@docker build . --target bin \
-	--output bin/ \
-	--platform ${PLATFORM}
 
-.PHONY: unit-test
-unit-test:
-	@docker build . --target unit-test
 
-.PHONY: unit-test-coverage
-unit-test-coverage:
-	@docker build . --target unit-test-coverage \
-	--output coverage/
-	cat coverage/cover.out
+.PHONY: build
+build:
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o ${BINARY}_amd64 ./cmd/scheduler/
 
 .PHONY: lint
 lint:
-	@docker build . --target lint
+	CGO_ENABLED=0 GOGC=40 golangci-lint run --timeout 5m
+
+.PHONY: clean
+clean:
+	rm -f ${BINARY}_amd64

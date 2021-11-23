@@ -1,4 +1,4 @@
-package main
+package schedulermain
 
 type DatabaseItem struct {
 	DbId   string
