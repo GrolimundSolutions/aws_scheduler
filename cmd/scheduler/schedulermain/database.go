@@ -1,4 +1,4 @@
-package main
+package schedulermain
 
 import (
 	"fmt"
@@ -27,10 +27,10 @@ func (app *application) checkConnection() bool {
 }
 
 func (app *application) initScheduler() {
-	migrationsPath := "file://migrations"
+	migrationsPath := "file://database/PROD_migrations"
 
 	if app.ctx.Environment == "development" || app.ctx.Environment == "devl" || app.ctx.Environment == "develop" || app.ctx.Environment == "dev" {
-		migrationsPath = "file://scripts/DEV_migrations"
+		migrationsPath = "file://database/DEV_migrations"
 	}
 
 	dbConnectionString := fmt.Sprintf("postgres://%s:%s@%s:%d/%s?sslmode=disable", app.ctx.DBUser, app.ctx.DBPassword, app.ctx.DBHost, app.ctx.DBPort, app.ctx.DBName)

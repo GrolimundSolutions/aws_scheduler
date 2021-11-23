@@ -1,4 +1,4 @@
-package main
+package schedulermain
 
 import (
 	log "github.com/sirupsen/logrus"

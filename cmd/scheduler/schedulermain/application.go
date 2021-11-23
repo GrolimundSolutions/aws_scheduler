@@ -1,4 +1,4 @@
-package main
+package schedulermain
 
 import (
 	"fmt"
@@ -7,13 +7,14 @@ import (
 )
 
 func (app *application) loadDatabaseInfos() {
+	// TODO: User Query args instead of hardcoded values or sprintf : https://pkg.go.dev/database/sql#DB.Query | https://go.dev/doc/tutorial/database-access
 	query := fmt.Sprintf(
 		"SELECT dbid, type, day, hour, action FROM %s WHERE day=%d AND hour=%d",
 		app.ctx.DBTable, app.day, app.hour)
 
 	rows, err := app.db.Query(query)
-	defer rows.Close()
 	CheckError(err)
+	defer rows.Close()
 
 	for rows.Next() {
 		var (
