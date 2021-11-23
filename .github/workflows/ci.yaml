@@ -12,7 +12,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Install dependencies
-        run: go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.43.0
+        run: go get github.com/golangci/golangci-lint/cmd/golangci-lint@v1.43.0
       - name: Run linter
         run: make lint
       - name: Build Linux binary amd64
