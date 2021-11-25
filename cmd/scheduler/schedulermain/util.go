@@ -2,11 +2,9 @@ package schedulermain
 
 import "time"
 
-func getDayOfWeek() int {
-	loc, _ := time.LoadLocation("Europe/Zurich")
+func getDayOfWeek(loc *time.Location) int {
 	return int(time.Now().In(loc).Weekday())
 }
-func getActuallyHour() int {
-	loc, _ := time.LoadLocation("Europe/Zurich")
+func getActuallyHour(loc *time.Location) int {
 	return time.Now().In(loc).Hour()
 }
