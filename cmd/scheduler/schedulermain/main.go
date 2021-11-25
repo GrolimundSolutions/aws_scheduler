@@ -6,6 +6,7 @@ import (
 	_ "github.com/lib/pq"
 	log "github.com/sirupsen/logrus"
 	"os"
+	"time"
 )
 
 type application struct {
@@ -15,6 +16,7 @@ type application struct {
 	hour      int
 	databases []DatabaseItem
 	clusters  []ClusterItem
+	location  *time.Location
 }
 
 func Run() {
@@ -45,10 +47,25 @@ func Run() {
 	CheckError(err)
 	defer db.Close()
 
+	// Define the TimeZone given from the config (TZ)
+	loc, _ := time.LoadLocation(config.TZ)
+	t := time.Now().In(loc)
+	zone, offset := t.Zone()
+
+	app := &application{
+		db:        db,
+		ctx:       &config,
+		day:       getDayOfWeek(loc),
+		hour:      getActuallyHour(loc),
+		databases: nil,
+		clusters:  nil,
+		location:  loc,
+	}
+
 	log.WithFields(log.Fields{
 		"Environment":        config.Environment,
-		"day":                getDayOfWeek(),
-		"hour":               getActuallyHour(),
+		"day":                getDayOfWeek(app.location),
+		"hour":               getActuallyHour(app.location),
 		"DB_Host":            config.DBHost,
 		"DB_Name":            config.DBName,
 		"DB_Port":            config.DBPort,
@@ -58,16 +75,9 @@ func Run() {
 		"AwsRegion":          config.AwsRegion,
 		"AwsAccessKeySize":   len(config.AwsAccessKey),
 		"AwsAccessKeyIdSize": len(config.AwsAccessKeyId),
+		"TimeZone":           zone,
+		"TimeZoneOffset":     offset,
 	}).Info("Processing all configs and Connections")
-
-	app := &application{
-		db:        db,
-		ctx:       &config,
-		day:       getDayOfWeek(),
-		hour:      getActuallyHour(),
-		databases: nil,
-		clusters:  nil,
-	}
 
 	// Check and retry the Connection to the Database
 	app.checkConnection()
