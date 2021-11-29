@@ -67,7 +67,7 @@ func (app *application) startScheduling() {
 		}).Debug("Worker Starting")
 
 		go func(group *sync.WaitGroup, db string, number int) {
-			db_runner(group, db, number)
+			db_runner(group, db, number, app)
 		}(&wg, db.DbId, i)
 	}
 

@@ -3,6 +3,7 @@ package schedulermain
 import (
 	"database/sql"
 	"fmt"
+	"github.com/aws/aws-sdk-go-v2/service/rds"
 	_ "github.com/lib/pq"
 	log "github.com/sirupsen/logrus"
 	"os"
@@ -17,6 +18,7 @@ type application struct {
 	databases []DatabaseItem
 	clusters  []ClusterItem
 	location  *time.Location
+	rdsClient *rds.Client
 }
 
 func Run() {
@@ -60,6 +62,7 @@ func Run() {
 		databases: nil,
 		clusters:  nil,
 		location:  loc,
+		rdsClient: nil,
 	}
 
 	log.WithFields(log.Fields{
@@ -82,6 +85,7 @@ func Run() {
 	// Check and retry the Connection to the Database
 	app.checkConnection()
 
+	// Create all Resources like rds Client aws-config context and more
 	app.initScheduler()
 
 	// Select all Items from the DB with the needed values (Day.now, Hour.now)
