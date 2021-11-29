@@ -28,7 +28,7 @@ func (app *application) checkConnection() bool {
 	return false
 }
 
-func (app *application) initScheduler() {
+func initDB(app *application) {
 	migrationsPath := "file://database/PROD_migrations"
 
 	if app.ctx.Environment == "development" || app.ctx.Environment == "devl" || app.ctx.Environment == "develop" || app.ctx.Environment == "dev" {

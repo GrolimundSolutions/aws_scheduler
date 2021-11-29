@@ -1,7 +1,10 @@
 package schedulermain
 
 import (
+	"context"
 	"fmt"
+	"github.com/aws/aws-sdk-go-v2/config"
+	"github.com/aws/aws-sdk-go-v2/service/rds"
 	log "github.com/sirupsen/logrus"
 	"sync"
 )
@@ -62,13 +65,13 @@ func (app *application) startScheduling() {
 	// Fill and start Workers for Databases
 	for i, db := range app.databases {
 		log.WithFields(log.Fields{
-			"Worker": 1,
+			"Worker": i,
 			"DB":     db.DbId,
 		}).Debug("Worker Starting")
 
-		go func(group *sync.WaitGroup, db string, number int) {
-			db_runner(group, db, number)
-		}(&wg, db.DbId, i)
+		go func(group *sync.WaitGroup, db string, number int, action string, client *rds.Client) {
+			db_runner(group, db, number, action, client)
+		}(&wg, db.DbId, i, db.action, app.rdsClient)
 	}
 
 	// Fill and start Workers for Clusters
@@ -77,13 +80,29 @@ func (app *application) startScheduling() {
 			"Worker": j,
 			"DB":     cluster.DbId,
 		}).Debug("Worker Started")
-		go func(group *sync.WaitGroup, cluster string, number int) {
-			cluster_runner(group, cluster, number)
-		}(&wg, cluster.DbId, j)
+		go func(group *sync.WaitGroup, cluster string, number int, action string, client *rds.Client) {
+			cluster_runner(group, cluster, number, action, client)
+		}(&wg, cluster.DbId, j, cluster.action, app.rdsClient)
 	}
 
 	fmt.Println("Main: Waiting for workers to finish")
 	wg.Wait()
 	fmt.Println("Main: Completed")
 
+}
+
+func (app *application) initScheduler() {
+	initDB(app)
+	initAwsClients(app)
+}
+
+func initAwsClients(app *application) {
+	// Load the Shared AWS Configuration (~/.aws/config)
+	// or load from the environment variables
+	cfg, err := config.LoadDefaultConfig(context.TODO())
+	if err != nil {
+		log.Fatal(err)
+	}
+	app.rdsClient = rds.NewFromConfig(cfg)
+	log.Info("RDS Client initialized")
 }
