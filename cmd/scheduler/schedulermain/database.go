@@ -6,6 +6,7 @@ import (
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	log "github.com/sirupsen/logrus"
+	"time"
 )
 
 func (app *application) checkConnection() bool {
@@ -21,12 +22,13 @@ func (app *application) checkConnection() bool {
 			"retry": count,
 			"err":   "Can't connect to Database",
 		}).Info("Checking connection")
+		time.Sleep(time.Second * 2)
 	}
 	log.Fatal("Can't connect to Database")
 	return false
 }
 
-func (app *application) initScheduler() {
+func initDB(app *application) {
 	migrationsPath := "file://database/PROD_migrations"
 
 	if app.ctx.Environment == "development" || app.ctx.Environment == "devl" || app.ctx.Environment == "develop" || app.ctx.Environment == "dev" {

@@ -17,6 +17,7 @@ type Config struct {
 	AwsAccessKey   string `mapstructure:"AWS_ACCESS_KEY"`
 	AwsRegion      string `mapstructure:"AWS_REGION"`
 	Environment    string `mapstructure:"ENVIRONMENT"`
+	TZ             string `mapstructure:"TZ"`
 }
 
 // LoadConfig reads configuration from file or environment variables.
