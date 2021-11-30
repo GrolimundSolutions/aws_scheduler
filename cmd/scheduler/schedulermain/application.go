@@ -2,7 +2,6 @@ package schedulermain
 
 import (
 	"context"
-	"fmt"
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/rds"
 	log "github.com/sirupsen/logrus"
@@ -85,9 +84,9 @@ func (app *application) startScheduling() {
 		}(&wg, cluster.DbId, j, cluster.action, app.rdsClient)
 	}
 
-	fmt.Println("Main: Waiting for workers to finish")
+	log.Info("Main: Waiting for workers to finish")
 	wg.Wait()
-	fmt.Println("Main: Completed")
+	log.Info("Main: All workers finished")
 
 }
 
