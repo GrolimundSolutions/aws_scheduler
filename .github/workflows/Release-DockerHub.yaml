@@ -3,7 +3,7 @@ name: Publish Dockerimage
 on:
   push:
     tags:
-      - 'v*'
+      - '*'
 
 jobs:
   Docker-Release:
@@ -18,4 +18,4 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           dockerfile: Dockerfile
-          tag_semver: true
+          tag_names: true
