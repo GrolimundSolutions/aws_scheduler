@@ -43,6 +43,7 @@ func initDB(app *application) {
 	if err != nil {
 		log.Fatal("new: ", err)
 	}
+
 	if err := m.Up(); err != nil {
 		log.Info("Start migrations")
 		if err.Error() == "no change" {
