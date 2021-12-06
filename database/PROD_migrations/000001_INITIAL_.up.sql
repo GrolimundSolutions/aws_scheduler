@@ -11,4 +11,4 @@ create table IF NOT EXISTS table_schedule
 );
 
 alter table table_schedule
-    owner to postgres;
+    owner to scheduler;
