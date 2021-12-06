@@ -18,7 +18,7 @@ COPY --from=authority /user/group /user/passwd /etc/
 COPY --from=authority /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 COPY --from=authority /usr/share/zoneinfo /usr/share/zoneinfo
 COPY --from=builder /scheduler ./
-COPY /database/PROD_migrations/* ./database/PROD_migrations/*
+COPY /database/PROD_migrations/* ./database/PROD_migrations/
 COPY app.env ./app.env
 USER scheduler:schedulergroup
 ENTRYPOINT ["./scheduler"]
