@@ -4,7 +4,18 @@ VERSION=`git describe --tags --always`
 BUILD=`date +%FT%T%z`
 
 # Setup the -ldflags option for go build here
-LDFLAGS=-ldflags "-w -s -X main/schedulermain.Version=${VERSION} -X cmd/scheduler/schedulermain.Build=${BUILD}"
+
+# Nothing Works... Here should it be implemented: cmd/scheduler/schedulermain/main.go
+# LDFLAGS=-ldflags "-w -s -X github.com/GrolimundSolutions/aws_scheduler/scheduler/schedulermain/main.go.Version=${VERSION} -X cmd/scheduler/schedulermain.Build=${BUILD}"
+# LDFLAGS=-ldflags "-w -s -X github.com/GrolimundSolutions/aws_scheduler/scheduler/schedulermain/main.Version=${VERSION} -X cmd/scheduler/schedulermain.Build=${BUILD}"
+# LDFLAGS=-ldflags "-w -s -X github.com/GrolimundSolutions/aws_scheduler/scheduler/schedulermain.Version=${VERSION} -X cmd/scheduler/schedulermain.Build=${BUILD}"
+# LDFLAGS=-ldflags "-w -s -X GrolimundSolutions/aws_scheduler/scheduler/schedulermain.Version=${VERSION} -X cmd/scheduler/schedulermain.Build=${BUILD}"
+# LDFLAGS=-ldflags "-w -s -X aws_scheduler/scheduler/schedulermain.Version=${VERSION} -X cmd/scheduler/schedulermain.Build=${BUILD}"
+# LDFLAGS=-ldflags "-w -s -X scheduler/schedulermain.Version=${VERSION} -X cmd/scheduler/schedulermain.Build=${BUILD}"
+# LDFLAGS=-ldflags "-w -s -X schedulermain.Version=${VERSION} -X cmd/scheduler/schedulermain.Build=${BUILD}"
+# LDFLAGS=-ldflags "-w -s -X schedulermain/main.Version=${VERSION} -X cmd/scheduler/schedulermain.Build=${BUILD}"
+# LDFLAGS=-ldflags "-w -s -X main.Version=${VERSION} -X cmd/scheduler/schedulermain.Build=${BUILD}"
+
 
 
 .PHONY: build
