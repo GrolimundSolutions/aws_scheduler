@@ -21,7 +21,14 @@ type application struct {
 	rdsClient *rds.Client
 }
 
+// Version is provided by ldflags
+var Version = "unspecified"
+
+// Build is provided by ldflags
+var Build = "unspecified"
+
 func Run() {
+
 	config, err := LoadConfig(".")
 	if err != nil {
 		log.Fatal("cannot load config:", err)
@@ -42,6 +49,8 @@ func Run() {
 	log.SetOutput(os.Stdout)
 	// get the log level from the config, set to warning if not set
 	log.SetLevel(ll)
+
+	log.Infof("Version: %s, Build: %s", Version, Build)
 
 	psqlconn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
 		config.DBHost, config.DBPort, config.DBUser, config.DBPassword, config.DBName)
