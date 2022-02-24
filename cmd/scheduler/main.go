@@ -5,7 +5,5 @@ import (
 )
 
 func main() {
-	// Show build information
-	//log.Infof("Version: %s, Build: %s", Version, Build)
 	schedulermain.Run()
 }
