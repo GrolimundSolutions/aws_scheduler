@@ -35,7 +35,7 @@ clean:
 # make release bump=minor  // 0.1.0
 # make release			   // 0.0.1
 release:
-	$(eval v := $(shell git describe --tags --abbrev=0 | sed -Ee 's/^v|-.*//'))
+	$(eval v := $(shell git ls-remote --refs --tags | cut --delimiter='/' --fields=3 | tr '-' '~' | sort --version-sort | tail --lines=1))
 ifeq ($(bump), major)
 	$(eval f := 1)
 else ifeq ($(bump), minor)
