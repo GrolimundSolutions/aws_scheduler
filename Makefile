@@ -25,7 +25,7 @@ run:
 	go run ${LDFLAGS} ./cmd/scheduler
 
 tests:
-	go test -v -short -race ./...
+	go test -v -short ./...
 
 .PHONY: clean
 clean:
