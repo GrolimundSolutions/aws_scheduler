@@ -21,7 +21,18 @@ jobs:
 
       - name: Checkout code
         uses: actions/checkout@v3
+
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v3.1.0
+
+      - name: Run coverage
+        run: go test -coverprofile=coverage.out -covermode=atomic ./...
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v2
+        if: success()
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+
       - name: Build Linux binary amd64
         run: make build
