@@ -29,10 +29,11 @@ jobs:
         run: go test -coverprofile=coverage.txt -covermode=atomic ./...
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v3.0.0
         if: success()
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          files: coverage.txt
 
       - name: Build Linux binary amd64
         run: make build
