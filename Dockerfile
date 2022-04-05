@@ -7,6 +7,7 @@ RUN apk --no-cache add ca-certificates tzdata
 
 # Build app binary for final stage
 FROM golang:1.18.0-alpine3.15 AS builder
+RUN apk add git
 WORKDIR /app
 COPY . .
 RUN go mod download
