@@ -9,18 +9,34 @@ func Test_getActuallyHour(t *testing.T) {
 	type args struct {
 		loc *time.Location
 	}
-	loca, _ := time.LoadLocation("Europe/Zurich")
+	localLocation, _ := time.LoadLocation("Europe/Zurich")
+	americanLocation, _ := time.LoadLocation("America/New_York")
+	asianLocation, _ := time.LoadLocation("Asia/Shanghai")
 	tests := []struct {
 		name string
 		args args
 		want int
 	}{
 		{
-			name: "test1",
+			name: "testLocal",
 			args: args{
-				loc: loca,
+				loc: localLocation,
 			},
-			want: time.Now().In(loca).Hour(),
+			want: time.Now().In(localLocation).Hour(),
+		},
+		{
+			name: "testAmerican",
+			args: args{
+				loc: americanLocation,
+			},
+			want: time.Now().In(americanLocation).Hour(),
+		},
+		{
+			name: "testAsian",
+			args: args{
+				loc: asianLocation,
+			},
+			want: time.Now().In(asianLocation).Hour(),
 		},
 	}
 	for _, tt := range tests {
@@ -42,11 +58,32 @@ func Test_getDayOfWeek(t *testing.T) {
 		want int
 	}{
 		{
-			name: "test1",
+			name: "testLocal",
 			args: args{
 				loc: time.Local,
 			},
 			want: int(time.Now().In(time.Local).Weekday()),
+		},
+		{
+			name: "testUTC",
+			args: args{
+				loc: time.UTC,
+			},
+			want: int(time.Now().In(time.UTC).Weekday()),
+		},
+		{
+			name: "testGMT",
+			args: args{
+				loc: time.FixedZone("GMT", 0),
+			},
+			want: int(time.Now().In(time.FixedZone("GMT", 0)).Weekday()),
+		},
+		{
+			name: "testGMT+6",
+			args: args{
+				loc: time.FixedZone("GMT", 6),
+			},
+			want: int(time.Now().In(time.FixedZone("GMT", 6)).Weekday()),
 		},
 	}
 	for _, tt := range tests {

@@ -5,7 +5,6 @@
   <a href="https://houndci.com"><img src="https://img.shields.io/badge/Reviewed_by-Hound-8E64B0.svg" alt="Reviewed by Hound"></a>
   <a href="https://github.com/GrolimundSolutions/aws_scheduler/actions/workflows/ci.yaml"> <img src="https://github.com/GrolimundSolutions/aws_scheduler/actions/workflows/ci.yaml/badge.svg?branch=main" alt="Build status"></a>
   <a href="https://github.com/GrolimundSolutions/aws_scheduler/actions/workflows/Release-DockerHub.yaml"> <img src="https://github.com/GrolimundSolutions/aws_scheduler/actions/workflows/Release-DockerHub.yaml/badge.svg" alt="Docker-Release status"></a>
-  <a href="https://snyk.io/test/github/GrolimundSolutions/aws_scheduler"> <img src="https://snyk.io/test/github/GrolimundSolutions/aws_scheduler/badge.svg" alt="Snyk Test"> </a>
   <a href="https://codecov.io/gh/GrolimundSolutions/aws_scheduler"><img src="https://codecov.io/gh/GrolimundSolutions/aws_scheduler/branch/main/graph/badge.svg?token=TWWG9J9PLE"/>
 </a>
 </p>
