@@ -20,7 +20,7 @@ FROM scratch
 COPY --from=authority /user/group /user/passwd /etc/
 COPY --from=authority /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 COPY --from=authority /usr/share/zoneinfo /usr/share/zoneinfo
-COPY --from=builder /aws_scheduler ./
+COPY --from=builder /app/aws_scheduler ./
 COPY /database/PROD_migrations/* ./database/PROD_migrations/
 COPY app.env ./app.env
 USER scheduler:schedulergroup
