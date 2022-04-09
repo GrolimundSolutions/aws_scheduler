@@ -13,7 +13,7 @@ LDFLAGS=-ldflags "-w -s -X ${MODULE_PATH}.Version=${VERSION} -X ${MODULE_PATH}.B
 build:
 	@echo "Version: ${VERSION}"
 	@echo "Build: ${BUILD}"
-	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build ${LDFLAGS} -o ${BINARY}_amd64 ./cmd/scheduler/
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build ${LDFLAGS} -o /${BINARY} ./cmd/scheduler/
 
 .PHONY: lint
 lint:
