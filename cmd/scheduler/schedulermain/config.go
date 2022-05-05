@@ -12,6 +12,7 @@ type Config struct {
 	DBUser         string `mapstructure:"DB_USER"`
 	DBPassword     string `mapstructure:"DB_PASSWORD"`
 	DBName         string `mapstructure:"DB_NAME"`
+	DBRootCertPath string `mapstructure:"DB_ROOT_CERT_PATH"`
 	LogLevel       string `mapstructure:"LOG_LEVEL"`
 	AwsAccessKeyId string `mapstructure:"AWS_ACCESS_KEY_ID"`
 	AwsAccessKey   string `mapstructure:"AWS_ACCESS_KEY"`

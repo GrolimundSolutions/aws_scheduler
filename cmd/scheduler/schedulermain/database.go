@@ -22,7 +22,7 @@ func (app *application) checkConnection() bool {
 			"retry": count,
 			"err":   "Can't connect to Database",
 		}).Info("Checking connection")
-		time.Sleep(time.Second * 2)
+		time.Sleep(time.Second * 3)
 	}
 	log.Fatal("Can't connect to Database")
 	return false
@@ -35,7 +35,7 @@ func initDB(app *application) {
 		migrationsPath = "file://database/DEV_migrations"
 	}
 
-	dbConnectionString := fmt.Sprintf("postgres://%s:%s@%s:%d/%s?sslmode=disable", app.ctx.DBUser, app.ctx.DBPassword, app.ctx.DBHost, app.ctx.DBPort, app.ctx.DBName)
+	dbConnectionString := fmt.Sprintf("postgres://%s:%s@%s:%d/%s?ssl=true&sslrootcert=%s", app.ctx.DBUser, app.ctx.DBPassword, app.ctx.DBHost, app.ctx.DBPort, app.ctx.DBName, app.ctx.DBRootCertPath)
 
 	m, err := migrate.New(
 		migrationsPath,
