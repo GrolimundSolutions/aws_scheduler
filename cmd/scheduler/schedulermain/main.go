@@ -52,8 +52,8 @@ func Run() {
 
 	log.Infof("Version: %s, Build: %s", Version, Build)
 
-	psqlconn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
-		config.DBHost, config.DBPort, config.DBUser, config.DBPassword, config.DBName)
+	psqlconn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s ssl=true sslrootcert=%s",
+		config.DBHost, config.DBPort, config.DBUser, config.DBPassword, config.DBName, config.DBRootCertPath)
 	db, err := sql.Open("postgres", psqlconn)
 	CheckError(err)
 	defer db.Close()
@@ -83,6 +83,7 @@ func Run() {
 		"DB_Port":            config.DBPort,
 		"DB_User":            config.DBUser,
 		"DB_Password":        "*****",
+		"DB_RootCertPath":    config.DBRootCertPath,
 		"log_level":          config.LogLevel,
 		"AwsRegion":          config.AwsRegion,
 		"AwsAccessKeySize":   len(config.AwsAccessKey),
