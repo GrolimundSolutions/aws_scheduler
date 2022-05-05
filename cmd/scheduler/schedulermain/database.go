@@ -13,7 +13,8 @@ func (app *application) checkConnection() bool {
 	count := 5
 
 	for count > 0 {
-		if app.db.Ping() == nil {
+		err := app.db.Ping()
+		if err == nil {
 			log.Info("Connection to Database is OK")
 			return true
 		}
@@ -22,6 +23,10 @@ func (app *application) checkConnection() bool {
 			"retry": count,
 			"err":   "Can't connect to Database",
 		}).Info("Checking connection")
+		log.WithFields(log.Fields{
+			"retry": count,
+			"err":   err,
+		}).Debug("Checking connection")
 		time.Sleep(time.Second * 3)
 	}
 	log.Fatal("Can't connect to Database")
