@@ -1,4 +1,4 @@
-create table IF NOT EXISTS table_schedule
+create table IF NOT EXISTS rds_scheduler.table_schedule
 (
     id     serial
         constraint table_schedule_pk
@@ -9,6 +9,3 @@ create table IF NOT EXISTS table_schedule
     hour   integer,
     action varchar
 );
-
-alter table table_schedule
-    owner to scheduler;
