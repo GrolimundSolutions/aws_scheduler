@@ -9,7 +9,7 @@ import (
 )
 
 func (app *application) loadDatabaseInfos() {
-	query := `SELECT dbid, type, day, hour, action FROM table_schedule WHERE day=$1 AND hour=$2`
+	query := `SELECT dbid, type, day, hour, action FROM rds_scheduler.table_schedule WHERE day=$1 AND hour=$2`
 	rows, err := app.db.Query(query, app.day, app.hour)
 	CheckError(err)
 	defer rows.Close()
