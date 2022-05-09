@@ -21,11 +21,15 @@ type application struct {
 	rdsClient *rds.Client
 }
 
-// Version is provided by ldflags
-var Version = "unspecified"
+var (
+	psqlconn = "empty"
 
-// Build is provided by ldflags
-var Build = "unspecified"
+	// Version is provided by ldflags
+	Version = "unspecified"
+
+	// Build is provided by ldflags
+	Build = "unspecified"
+)
 
 func Run() {
 
@@ -52,7 +56,6 @@ func Run() {
 
 	log.Infof("Version: %s, Build: %s", Version, Build)
 
-	psqlconn := "empty"
 	if len(config.DBRootCertPath) == 0 {
 		psqlconn = fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
 			config.DBHost, config.DBPort, config.DBUser, config.DBPassword, config.DBName)

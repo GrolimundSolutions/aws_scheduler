@@ -33,10 +33,12 @@ func (app *application) checkConnection() bool {
 	return false
 }
 
+var (
+	dbConnectionString = "empty"
+)
+
 func initDB(app *application) {
 	migrationsPath := "file://database/PROD_migrations"
-	dbConnectionString := "empty"
-
 	if app.ctx.Environment == "development" || app.ctx.Environment == "devl" || app.ctx.Environment == "develop" || app.ctx.Environment == "dev" {
 		migrationsPath = "file://database/DEV_migrations"
 	}
