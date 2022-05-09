@@ -33,14 +33,27 @@ func (app *application) checkConnection() bool {
 	return false
 }
 
+var (
+	dbConnectionString = "empty"
+)
+
 func initDB(app *application) {
 	migrationsPath := "file://database/PROD_migrations"
-
 	if app.ctx.Environment == "development" || app.ctx.Environment == "devl" || app.ctx.Environment == "develop" || app.ctx.Environment == "dev" {
 		migrationsPath = "file://database/DEV_migrations"
 	}
 
-	dbConnectionString := fmt.Sprintf("postgres://%s:%s@%s:%d/%s?ssl=true&sslrootcert=%s", app.ctx.DBUser, app.ctx.DBPassword, app.ctx.DBHost, app.ctx.DBPort, app.ctx.DBName, app.ctx.DBRootCertPath)
+	if len(app.ctx.DBRootCertPath) == 0 {
+		dbConnectionString = fmt.Sprintf("postgres://%s:%s@%s:%d/%s?sslmode=disable", app.ctx.DBUser, app.ctx.DBPassword, app.ctx.DBHost, app.ctx.DBPort, app.ctx.DBName)
+		log.WithFields(log.Fields{
+			"dbConnectionString": fmt.Sprintf("postgres://%s:%s@%s:%d/%s?sslmode=disable", app.ctx.DBUser, "******", app.ctx.DBHost, app.ctx.DBPort, app.ctx.DBName),
+		}).Debug("initDB")
+	} else {
+		dbConnectionString = fmt.Sprintf("postgres://%s:%s@%s:%d/%s?ssl=true&sslrootcert=%s", app.ctx.DBUser, app.ctx.DBPassword, app.ctx.DBHost, app.ctx.DBPort, app.ctx.DBName, app.ctx.DBRootCertPath)
+		log.WithFields(log.Fields{
+			"dbConnectionString": fmt.Sprintf("postgres://%s:%s@%s:%d/%s?ssl=true&sslrootcert=%s", app.ctx.DBUser, "******", app.ctx.DBHost, app.ctx.DBPort, app.ctx.DBName, app.ctx.DBRootCertPath),
+		}).Debug("initDB")
+	}
 
 	m, err := migrate.New(
 		migrationsPath,
