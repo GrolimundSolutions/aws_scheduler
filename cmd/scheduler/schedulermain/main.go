@@ -52,8 +52,21 @@ func Run() {
 
 	log.Infof("Version: %s, Build: %s", Version, Build)
 
-	psqlconn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s ssl=true sslrootcert=%s",
-		config.DBHost, config.DBPort, config.DBUser, config.DBPassword, config.DBName, config.DBRootCertPath)
+	psqlconn := "empty"
+	if len(config.DBRootCertPath) == 0 {
+		psqlconn = fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
+			config.DBHost, config.DBPort, config.DBUser, config.DBPassword, config.DBName)
+		log.WithFields(log.Fields{
+			"dbConnectionString": fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", config.DBUser, "******", config.DBHost, config.DBPort, config.DBName),
+		}).Debug("psqlconn")
+	} else {
+		psqlconn = fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s ssl=true sslrootcert=%s",
+			config.DBHost, config.DBPort, config.DBUser, config.DBPassword, config.DBName, config.DBRootCertPath)
+		log.WithFields(log.Fields{
+			"dbConnectionString": fmt.Sprintf("postgres://%s:%s@%s:%d/%s?ssl=true&sslrootcert=%s", config.DBUser, "******", config.DBHost, config.DBPort, config.DBName, config.DBRootCertPath),
+		}).Debug("psqlconn")
+	}
+
 	db, err := sql.Open("postgres", psqlconn)
 	CheckError(err)
 	defer db.Close()
