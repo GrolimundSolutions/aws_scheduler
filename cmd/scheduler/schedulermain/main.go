@@ -57,13 +57,13 @@ func Run() {
 		psqlconn = fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
 			config.DBHost, config.DBPort, config.DBUser, config.DBPassword, config.DBName)
 		log.WithFields(log.Fields{
-			"dbConnectionString": fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", config.DBUser, "******", config.DBHost, config.DBPort, config.DBName),
+			"dbConnectionString": fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", config.DBHost, config.DBPort, config.DBUser, "*****", config.DBName),
 		}).Debug("psqlconn")
 	} else {
 		psqlconn = fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s ssl=true sslrootcert=%s",
 			config.DBHost, config.DBPort, config.DBUser, config.DBPassword, config.DBName, config.DBRootCertPath)
 		log.WithFields(log.Fields{
-			"dbConnectionString": fmt.Sprintf("postgres://%s:%s@%s:%d/%s?ssl=true&sslrootcert=%s", config.DBUser, "******", config.DBHost, config.DBPort, config.DBName, config.DBRootCertPath),
+			"dbConnectionString": fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s ssl=true sslrootcert=%s", config.DBHost, config.DBPort, config.DBUser, "*****", config.DBName, config.DBRootCertPath),
 		}).Debug("psqlconn")
 	}
 
