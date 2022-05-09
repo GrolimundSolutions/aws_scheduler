@@ -1,3 +1,4 @@
+BEGIN;
 create table IF NOT EXISTS rds_scheduler.table_schedule
 (
     id     serial
@@ -9,3 +10,4 @@ create table IF NOT EXISTS rds_scheduler.table_schedule
     hour   integer,
     action varchar
 );
+COMMIT;
