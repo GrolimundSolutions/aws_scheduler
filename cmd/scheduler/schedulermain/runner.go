@@ -199,7 +199,7 @@ func cluster_runner(wg *sync.WaitGroup, dbid string, n int, action string, clien
 		}).Debug("Stopping Cluster")
 
 		// 1. Get actual Status from the RDS
-		status, err := DescribeRDS_DB(dbid, client)
+		status, err := DescribeRDS_Cluster(dbid, client)
 		log.WithFields(log.Fields{
 			"Worker":  n,
 			"Cluster": dbid,
