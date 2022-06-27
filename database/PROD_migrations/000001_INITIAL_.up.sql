@@ -1,4 +1,5 @@
 BEGIN;
+CREATE SCHEMA IF NOT EXISTS rds_scheduler;
 create table IF NOT EXISTS rds_scheduler.table_schedule
 (
     id     serial
