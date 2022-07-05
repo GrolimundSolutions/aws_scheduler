@@ -49,7 +49,7 @@ func db_runner(wg *sync.WaitGroup, dbid string, n int, action string, client *rd
 		StartRDS_DB(dbid, client, n)
 
 		// Slow down the process
-		time.Sleep(5000 * time.Millisecond)
+		time.Sleep(10 * time.Second)
 
 		// 3. Get the Status from Response
 		status, err = DescribeRDS_DB(dbid, client)
@@ -102,7 +102,7 @@ func db_runner(wg *sync.WaitGroup, dbid string, n int, action string, client *rd
 		StopRDS_DB(dbid, client, n)
 
 		// Slow down the process
-		time.Sleep(5000 * time.Millisecond)
+		time.Sleep(10 * time.Second)
 
 		// 3. Get the Status from Response
 		status, err = DescribeRDS_DB(dbid, client)
@@ -172,7 +172,7 @@ func cluster_runner(wg *sync.WaitGroup, dbid string, n int, action string, clien
 		StartRDS_Cluster(dbid, client, n)
 
 		// Slow down the process
-		time.Sleep(5 * time.Second)
+		time.Sleep(10 * time.Second)
 
 		// 3. Get the Status from Response
 		status, err = DescribeRDS_Cluster(dbid, client)
@@ -225,9 +225,8 @@ func cluster_runner(wg *sync.WaitGroup, dbid string, n int, action string, clien
 		StopRDS_Cluster(dbid, client, n)
 
 		// Slow down the process
-		log.Debug("start Sleep")
-		time.Sleep(5 * time.Second)
-		log.Debug("stop Sleep")
+
+		time.Sleep(10 * time.Second)
 
 		// 3. Get the Status from Response
 		status, err = DescribeRDS_Cluster(dbid, client)
