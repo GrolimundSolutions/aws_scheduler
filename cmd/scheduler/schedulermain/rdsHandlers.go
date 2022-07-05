@@ -1,4 +1,5 @@
 // RDS Status list: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/accessing-monitoring.html#Overview.DBInstance.Status
+// Cluster Status:  https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/accessing-monitoring.html
 
 package schedulermain
 
@@ -12,33 +13,9 @@ import (
 	"regexp"
 )
 
-func getDBInstanceStatus(output string) (string, error) {
-	r, _ := regexp.Compile(`(?m)(?:DBInstanceStatus: ")(.*?)(?:")`)
-	status := r.FindStringSubmatch(output)
-	log.WithFields(log.Fields{
-		"status_raw": status,
-	}).Debug("getDBInstanceStatus")
-
-	if len(status) > 1 {
-		return status[1], nil
-	} else {
-		return "", errors.New("DBInstanceStatus not found")
-	}
-}
-
-func getDBClusterStatus(output string) (string, error) {
-	r, _ := regexp.Compile(`(?m)(?:\bStatus: ")(.*?)(?:")`)
-	status := r.FindStringSubmatch(output)
-	log.WithFields(log.Fields{
-		"status_raw": status,
-	}).Debug("getDBClusterStatus")
-
-	if len(status) > 1 {
-		return status[1], nil
-	} else {
-		return "", errors.New("DBClusterStatus not found")
-	}
-}
+// ------------------------------------------------------------------------------------------------------------
+// Database
+// ------------------------------------------------------------------------------------------------------------
 
 func DescribeRDS_DB(database string, client *rds.Client) (string, error) {
 
@@ -74,41 +51,19 @@ func DescribeRDS_DB(database string, client *rds.Client) (string, error) {
 	return status, err
 }
 
-func DescribeRDS_Cluster(cluster string, client *rds.Client) (string, error) {
-
-	rdsOutput, err := client.DescribeDBClusters(context.TODO(), &rds.DescribeDBClustersInput{
-		DBClusterIdentifier: aws.String(cluster),
-	})
-	if err != nil {
-		log.WithFields(log.Fields{
-			"DBId":  cluster,
-			"error": err,
-		}).Error("Error describe RDS-Cluster")
-	}
-
-	status, err := getDBClusterStatus(awsutil.Prettify(rdsOutput))
-	if err != nil {
-		log.WithFields(log.Fields{
-			"DBId":  cluster,
-			"error": err,
-		}).Error("Error get DBClusterStatus")
-	}
-
-	// as workaround to print the result, we need to use the V1 SDK (awsutil.Prettify()) Function
+func getDBInstanceStatus(output string) (string, error) {
+	r, _ := regexp.Compile(`(?m)(?:DBInstanceStatus: ")(.*?)(?:")`)
+	status := r.FindStringSubmatch(output)
 	log.WithFields(log.Fields{
-		"DBId":   cluster,
-		"status": status,
-	}).Info("RDS-Cluster Description")
-	log.WithFields(log.Fields{
-		"DBId":   cluster,
-		"status": status,
-		"raw":    awsutil.Prettify(rdsOutput),
-	}).Debug("RDS-Cluster Description")
+		"status_raw": status,
+	}).Debug("getDBInstanceStatus")
 
-	return status, err
+	if len(status) > 1 {
+		return status[1], nil
+	} else {
+		return "", errors.New("DBInstanceStatus not found")
+	}
 }
-
-// Database
 
 func StartRDS_DB(database string, rdsClient *rds.Client, n int) {
 
@@ -182,7 +137,57 @@ func StopRDS_DB(database string, rdsClient *rds.Client, n int) {
 
 }
 
+// ------------------------------------------------------------------------------------------------------------
 // Cluster
+// ------------------------------------------------------------------------------------------------------------
+
+func DescribeRDS_Cluster(cluster string, client *rds.Client) (string, error) {
+
+	rdsOutput, err := client.DescribeDBClusters(context.TODO(), &rds.DescribeDBClustersInput{
+		DBClusterIdentifier: aws.String(cluster),
+	})
+	if err != nil {
+		log.WithFields(log.Fields{
+			"DBId":  cluster,
+			"error": err,
+		}).Error("Error describe RDS-Cluster")
+	}
+
+	status, err := getDBClusterStatus(awsutil.Prettify(rdsOutput))
+	if err != nil {
+		log.WithFields(log.Fields{
+			"DBId":  cluster,
+			"error": err,
+		}).Error("Error get DBClusterStatus")
+	}
+
+	// as workaround to print the result, we need to use the V1 SDK (awsutil.Prettify()) Function
+	log.WithFields(log.Fields{
+		"DBId":   cluster,
+		"status": status,
+	}).Info("RDS-Cluster Description")
+	log.WithFields(log.Fields{
+		"DBId":   cluster,
+		"status": status,
+		"raw":    awsutil.Prettify(rdsOutput),
+	}).Debug("RDS-Cluster Description")
+
+	return status, err
+}
+
+func getDBClusterStatus(output string) (string, error) {
+	r, _ := regexp.Compile(`(?m)(?:\bStatus: ")(.*?)(?:")`)
+	status := r.FindStringSubmatch(output)
+	log.WithFields(log.Fields{
+		"status_raw": status,
+	}).Debug("getDBClusterStatus")
+
+	if len(status) > 1 {
+		return status[1], nil
+	} else {
+		return "", errors.New("DBClusterStatus not found")
+	}
+}
 
 func StartRDS_Cluster(cluster string, rdsClient *rds.Client, n int) {
 
