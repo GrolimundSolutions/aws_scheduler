@@ -91,7 +91,7 @@ func DescribeRDS_Cluster(cluster string, client *rds.Client) (string, error) {
 		log.WithFields(log.Fields{
 			"DBId":  cluster,
 			"error": err,
-		}).Error("Error get DBInstanceStatus")
+		}).Error("Error get DBClusterStatus")
 	}
 
 	// as workaround to print the result, we need to use the V1 SDK (awsutil.Prettify()) Function
