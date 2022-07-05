@@ -86,7 +86,7 @@ func DescribeRDS_Cluster(cluster string, client *rds.Client) (string, error) {
 		}).Error("Error describe RDS-Cluster")
 	}
 
-	status, err := getDBInstanceStatus(awsutil.Prettify(rdsOutput))
+	status, err := getDBClusterStatus(awsutil.Prettify(rdsOutput))
 	if err != nil {
 		log.WithFields(log.Fields{
 			"DBId":  cluster,
