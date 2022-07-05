@@ -64,7 +64,7 @@ func Test_getDBClusterStatus(t *testing.T) {
 		{
 			name: "test_available",
 			args: args{
-				output: "DBClusterStatus: \"available\"",
+				output: "Status: \"available\"",
 			},
 			want:    "available",
 			wantErr: false,
@@ -72,7 +72,7 @@ func Test_getDBClusterStatus(t *testing.T) {
 		{
 			name: "test_running",
 			args: args{
-				output: "DBClusterStatus: \"running\"",
+				output: "Status: \"running\"",
 			},
 			want:    "running",
 			wantErr: false,
@@ -80,7 +80,7 @@ func Test_getDBClusterStatus(t *testing.T) {
 		{
 			name: "test_invalid",
 			args: args{
-				output: "DBClusterStatus: ",
+				output: "Status: ",
 			},
 			want:    "",
 			wantErr: true,
