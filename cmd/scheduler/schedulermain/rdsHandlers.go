@@ -27,7 +27,7 @@ func getDBInstanceStatus(output string) (string, error) {
 }
 
 func getDBClusterStatus(output string) (string, error) {
-	r, _ := regexp.Compile(`(?m)(?:DBClusterStatus: ")(.*?)(?:")`)
+	r, _ := regexp.Compile(`(?m)(?:Status: ")(.*?)(?:")`)
 	status := r.FindStringSubmatch(output)
 	log.WithFields(log.Fields{
 		"status_raw": status,
