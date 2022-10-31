@@ -17,7 +17,7 @@ build:
 
 .PHONY: lint
 lint:
-	CGO_ENABLED=0 GOGC=40 golangci-lint run --timeout 5m
+	CGO_ENABLED=0 GOGC=40 golangci-lint run --timeout 4m
 
 run:
 	@echo "Version: ${VERSION}"
