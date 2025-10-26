@@ -1,12 +1,12 @@
 # Obtain certs for final stage
-FROM alpine:3.18.4 as authority
+FROM alpine:latest as authority
 RUN mkdir /user && \
     echo 'scheduler:x:1001:1001:scheduler:/:' > /user/passwd && \
     echo 'schedulergroup:x:1001:' > /user/group
 RUN apk --no-cache add ca-certificates tzdata
 
 # Build app binary for final stage
-FROM golang:1.21.1-alpine3.18 AS builder
+FROM golang:latest AS builder
 RUN apk add git make
 WORKDIR /app
 COPY . .
